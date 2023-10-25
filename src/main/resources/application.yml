@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: consul-test
+
+  cloud:
+    consul:
+      config:
+        #       for avoid errors about spring configuration and consul
+        #       config server don't needed if we work only with key-value with consul client
+        enabled: false
+      host: localhost
+      port: 8500

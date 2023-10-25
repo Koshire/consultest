@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  consul:
+    container_name: consul-test
+    image: consul:1.15.0
+    restart: always
+    ports:
+      - 8500:8500
+      - 8600:8600
+    environment:
+      SERVER_URL: http://consul-dev:8500
+      CONSUL_LOCAL_CONFIG: >-
+        {
+          "bootstrap": true,
+          "server": true,
+          "node_name": "consul1",
+          "bind_addr": "0.0.0.0",
+          "client_addr": "0.0.0.0",
+          "bootstrap_expect": 1,
+          "ui": true,
+          "addresses" : {
+            "http" : "0.0.0.0"
+          },
+          "ports": {
+            "http": 8500
+          },
+          "connect" : {
+            "enabled" : true
+          }
+        }
+    volumes:
+      - ./data:/consul/data
+    command: agent -server -bind 0.0.0.0 -client 0.0.0.0 -bootstrap-expect=1
